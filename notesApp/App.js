@@ -1,10 +1,9 @@
 import * as React from 'react';
-import {useRef} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, ScrollView, StyleSheet, Text, Animated, PanResponder, View } from 'react-native';
-import { SpeedDial } from '@rneui/base';
+import { Pressable, ScrollView, StyleSheet, Text, Icon } from 'react-native';
+import { Button, ListItem, SpeedDial } from '@rneui/base';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SpeedDialAction } from '@rneui/base/dist/SpeedDial/SpeedDial.Action';
@@ -26,7 +25,7 @@ export default function App() {
 }
 
 function HomeScreen({navigation}) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return(
     <SafeAreaView style={styles.container}>
@@ -106,10 +105,10 @@ function HomeScreen({navigation}) {
 function FolderScreen({navigation}) {
 
   //SpeedDial
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   //ScrollView
-  const [isScrolling, setScrolling] = React.useState(false);
+  const [isScrolling, setScrolling] = useState(false);
 
   return(
     <SafeAreaView style={styles.container}>
@@ -209,10 +208,10 @@ function FolderScreen({navigation}) {
 function NotesScreen({navigation}) {
 
   //SpeedDial
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   //ScrollView
-  const [isScrolling, setScrolling] = React.useState(false);
+  const [isScrolling, setScrolling] = useState(false);
 
 
   return(
@@ -223,8 +222,39 @@ function NotesScreen({navigation}) {
       setScrolling(event.nativeEvent.contentOffset.y > 0)
     }}
     >
-    <Text>My Notes</Text>
+    <Text style={styles.notesText}>Mobile Dev</Text>
 
+      <Pressable
+      onPress={() => navigation.navigate('Notes')}
+      style={styles.notePressable}
+      ><Text style={styles.pressableText}>App Idea</Text>
+      </Pressable>
+    
+      <Pressable
+      onPress={() => navigation.navigate('Notes')}
+      style={styles.notePressable}
+      ><Text style={styles.pressableText}>Class Notes</Text>
+      </Pressable>
+
+      <Pressable
+      onPress={() => navigation.navigate('Notes')}
+      style={styles.notePressable}
+      ><Text style={styles.pressableText}>Resources</Text>
+      </Pressable>
+
+      <Pressable
+      onPress={() => navigation.navigate('Notes')}
+      style={styles.notePressable}
+      ><Text style={styles.pressableText}>Final Project</Text>
+      </Pressable>
+
+      <Pressable
+      onPress={() => navigation.navigate('Market')}
+      style={styles.notePressable}
+      ><Text style={styles.pressableText}>Market</Text>
+      </Pressable>
+
+    
     </ScrollView>
 
     {!isScrolling && (
@@ -290,11 +320,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   homeText: {
-    fontSize: 40,
+    fontSize: 45,
     fontWeight: 'bold',
   },
   homeText2: {
-    fontSize: 40,
+    fontSize: 45,
     marginBottom: 20,
   },
   pressable: {
@@ -306,7 +336,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2b2a28',
   },
   pressableText: {
-    textAlign: 'right',
+    textAlign: 'left',
     fontSize: 35,
     fontWeight: 'bold',
     height: 40,
@@ -315,9 +345,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   folderText: {
-    fontSize: 35,
+    fontSize: 45,
     marginRight: 150,
     marginBottom: 20,
+    marginTop: -10,
   },
   folderPressable1: {
     borderRadius: 8,
@@ -358,5 +389,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     backgroundColor: '#676391',
+  },
+  notesText: {
+    fontSize: 45,
+    marginRight: 150,
+    marginBottom: 20,
+    marginTop: -10,
+  },
+  notePressable: {
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#cb6efa',
   },
 });
