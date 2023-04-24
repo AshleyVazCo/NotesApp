@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, ScrollView, StyleSheet, Text, Icon } from 'react-native';
-import { Button, ListItem, SpeedDial } from '@rneui/base';
+import { PricingCard, SpeedDial } from '@rneui/base';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SpeedDialAction } from '@rneui/base/dist/SpeedDial/SpeedDial.Action';
@@ -25,26 +25,41 @@ export default function App() {
 }
 
 function HomeScreen({navigation}) {
+  //SpeedDial
   const [open, setOpen] = useState(false);
+
+  //ScrollView
+  const [isScrolling, setScrolling] = useState(false);
 
   return(
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      {/* The ScrollView area. The contents in this area are viewable if you scroll. The SpeedDial is outside of the ScrollView area. The onScroll event will make the SpeedDial disappear if you scroll. */}
+      <ScrollView
+      onScroll={(event) => {
+        setScrolling(event.nativeEvent.contentOffset.y > 0)
+      }}
+      >
+        {/* Welcome Text */}
       <Text style={styles.homeText}>Welcome,</Text> 
       <Text style={styles.homeText2}>Ashley</Text>
 
+      {/* Recently Used Section - Includes route to Mobile Dev notes */}
+      <Text style={styles.homeText}>Recently Used</Text>
+
+      <Pressable
+      onPress={() => navigation.navigate('Notes')}
+      style={styles.recentPressable}
+      ><Text style={styles.recentText}>Mobile Dev</Text>
+      </Pressable>
+
+
+      {/* Menu Items/Routes */}
+      <Text style={styles.homeText}>Go to:</Text>
       
       <Pressable
       onPress={() => navigation.navigate('Folder')}
       style={styles.pressable}
       ><Text style={styles.pressableText}>Folder</Text>
-      </Pressable>
-
-
-      <Pressable
-      onPress={() => navigation.navigate('Notes')}
-      style={styles.pressable}
-      ><Text style={styles.pressableText}>Notes</Text>
       </Pressable>
      
 
@@ -56,7 +71,10 @@ function HomeScreen({navigation}) {
 
       </ScrollView>
 
+      {/* Makes the SpeedDial disappear when you scroll which is the intended action. */}
+      {!isScrolling && (
 
+        // SpeedDial in the homeScreen will allow you to either add a new note or create a new folder. For the purpose of this project no screens were created for those options, but is something to be developed in the future.
       <SpeedDial
       isOpen={open}
       icon={{name:'add', color: 'black', overlayColor: '#dda0dd', size: 30}}
@@ -95,7 +113,7 @@ function HomeScreen({navigation}) {
         />
 
       </SpeedDial>
-
+      )}
 
     <StatusBar style="auto" />
     </SafeAreaView>
@@ -112,12 +130,13 @@ function FolderScreen({navigation}) {
 
   return(
     <SafeAreaView style={styles.container}>
+   {/* The ScrollView area. The contents in this area are viewable if you scroll. The SpeedDial is outside of the ScrollView area. The onScroll event will make the SpeedDial disappear if you scroll. */}
     <ScrollView
     onScroll={(event) => {
       setScrolling(event.nativeEvent.contentOffset.y > 0)
     }}
     >
-  
+      {/* List of Folders */}
     <Text style={styles.folderText}>My Folders</Text>
 
       <Pressable
@@ -157,8 +176,10 @@ function FolderScreen({navigation}) {
       </Pressable>
       </ScrollView>
 
+      {/* SpeedDial will dissappear when you scroll which is the intended action. */}
       {!isScrolling && (
-
+        
+       // SpeedDial in the folderScreen will allow you to either edit a folder or create a new folder. For the purpose of this project no screens were created for those options, but is something to be developed in the future.
       <SpeedDial
       isOpen={open}
       icon={{name:'add', color: 'black', overlayColor: '#dda0dd', size: 30}}
@@ -222,6 +243,7 @@ function NotesScreen({navigation}) {
       setScrolling(event.nativeEvent.contentOffset.y > 0)
     }}
     >
+      {/* List of Notes within the Mobile Dev folder. For the purpose of this project there will only be one Notes Screen. */}
     <Text style={styles.notesText}>Mobile Dev</Text>
 
       <Pressable
@@ -257,8 +279,10 @@ function NotesScreen({navigation}) {
     
     </ScrollView>
 
+    {/* SpeedDial will dissappear when you scroll which is the intended action. */}
     {!isScrolling && (
 
+      // SpeedDial in the NotesScreen will allow you to either edit a note or create a new note. For the purpose of this project no screens were created for those options, but is something to be developed in the future.
     <SpeedDial
       isOpen={open}
       icon={{name:'add', color: 'black', overlayColor: '#dda0dd', size: 30}}
@@ -307,6 +331,35 @@ function MarketScreen({navigation}) {
   return(
     <SafeAreaView style={styles.container}>
 
+      {/* Mockup sales listing */}
+    <ScrollView>
+
+    <PricingCard
+    color='black'
+    title= 'Class Notes Package'
+    price= '$2'
+    info={['Includes 5 Class Notes templates']}
+    button={{title: 'Add to Cart'}}
+    />
+
+    <PricingCard
+    color='black'
+    title= 'Project Proposal Package'
+    price= '$2'
+    info={['Includes 5 Project Proposal templates']}
+    button={{title: 'Add to Cart'}}
+    />
+
+    <PricingCard
+    color='black'
+    title= 'Social Media Package'
+    price= '$2'
+    info={['Includes 5 Social Media planning templates']}
+    button={{title: 'Add to Cart'}}
+    />
+
+    </ScrollView>
+
     <StatusBar style="auto" />
     </SafeAreaView>
   )
@@ -326,6 +379,23 @@ const styles = StyleSheet.create({
   homeText2: {
     fontSize: 45,
     marginBottom: 20,
+  },
+  recentPressable: {
+    borderRadius: 8,
+    borderWidth: 1,
+    width: 190,
+    height: 200,
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 20,
+    backgroundColor: '#cb6efa',
+  },
+  recentText: {
+    fontSize: 40,
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    marginTop: 30,
   },
   pressable: {
     borderRadius: 8,
