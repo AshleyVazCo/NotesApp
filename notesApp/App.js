@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, ScrollView, StyleSheet, Text, Icon } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, PanResponder, Animated } from 'react-native';
 import { PricingCard, SpeedDial } from '@rneui/base';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -30,6 +30,25 @@ function HomeScreen({navigation}) {
 
   //ScrollView
   const [isScrolling, setScrolling] = useState(false);
+
+  // SpeedDial Position
+  const [speedDialPosition, setSpeedDialPosition] = useState({x: 0, y: 0});
+
+  const panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderMove: Animated.event([
+      null,
+      { dx: speedDialPosition.x, dy: speedDialPosition.y}
+    ],
+    {useNativeDriver: false}
+    ),
+    onPanResponderRelease: (event, gestureState) => {
+      Animated.spring(speedDialPosition, {
+        toValue: {x: 0, y: 0},
+        useNativeDriver: true,
+      }).start();
+    },
+  })
 
   return(
     <SafeAreaView style={styles.container}>
@@ -75,6 +94,14 @@ function HomeScreen({navigation}) {
       {!isScrolling && (
 
         // SpeedDial in the homeScreen will allow you to either add a new note or create a new folder. For the purpose of this project no screens were created for those options, but is something to be developed in the future.
+      
+        <Animated.View
+        style={[
+          
+          {transform: [{ translateX: speedDialPosition.x}, {translateY: speedDialPosition.y}]},
+        ]}
+        {...panResponder.panHandlers}
+        >
       <SpeedDial
       isOpen={open}
       icon={{name:'add', color: 'black', overlayColor: '#dda0dd', size: 30}}
@@ -113,7 +140,9 @@ function HomeScreen({navigation}) {
         />
 
       </SpeedDial>
+      </Animated.View>
       )}
+      
 
     <StatusBar style="auto" />
     </SafeAreaView>
@@ -371,6 +400,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  speedDialContainer: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
   },
   homeText: {
     fontSize: 45,
