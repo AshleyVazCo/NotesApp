@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/NotesApp/static/js/main.0c8392e0.js",
+    "static/js/617.05973073.js": "/NotesApp/static/js/617.05973073.js",
+    "favicon.ico": "/NotesApp/favicon.ico",
+    "index.html": "/NotesApp/index.html",
+    "static/media/rocket.png": "/NotesApp/static/media/rocket.d2f3bf41d5e4515c39a9.png",
+    "static/media/bell.png": "/NotesApp/static/media/bell.cf04af27d6a651c4b904.png",
+    "favicon-32.png": "/NotesApp/favicon-32.png",
+    "static/media/star.png": "/NotesApp/static/media/star.69c7138684828d68fe5a.png",
+    "static/media/heart.png": "/NotesApp/static/media/heart.23b5c2c0eb77d50ff1b4.png",
+    "favicon-16.png": "/NotesApp/favicon-16.png",
+    "serve.json": "/NotesApp/serve.json",
+    "manifest.json": "/NotesApp/manifest.json",
+    "main.0c8392e0.js.map": "/NotesApp/static/js/main.0c8392e0.js.map",
+    "617.05973073.js.map": "/NotesApp/static/js/617.05973073.js.map"
+  },
+  "entrypoints": [
+    "static/js/617.05973073.js",
+    "static/js/main.0c8392e0.js"
+  ]
+}
