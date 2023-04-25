@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, ScrollView, StyleSheet, Text, View, PanResponder, Animated } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, PanResponder, Animated, } from 'react-native';
 import { PricingCard, SpeedDial } from '@rneui/base';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,24 +31,25 @@ function HomeScreen({navigation}) {
   //ScrollView
   const [isScrolling, setScrolling] = useState(false);
 
-  // SpeedDial Position
-  const [speedDialPosition, setSpeedDialPosition] = useState({x: 0, y: 0});
 
-  const panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: () => true,
-    onPanResponderMove: Animated.event([
-      null,
-      { dx: speedDialPosition.x, dy: speedDialPosition.y}
-    ],
-    {useNativeDriver: false}
-    ),
-    onPanResponderRelease: (event, gestureState) => {
-      Animated.spring(speedDialPosition, {
-        toValue: {x: 0, y: 0},
-        useNativeDriver: true,
-      }).start();
-    },
-  })
+  // SpeedDial Position - Not sure yet why it's not working. The SpeedDial has now disappered. I think it may be because of the ScrollView. Need more time to work this code out. 
+  // const [speedDialPosition, setSpeedDialPosition] = useState({x: 0, y: 0});
+
+  // const panResponder = PanResponder.create({
+  //   onMoveShouldSetPanResponder: () => true,
+  //   onPanResponderMove: Animated.event([
+  //     null,
+  //     { dx: speedDialPosition.x, dy: speedDialPosition.y}
+  //   ],
+  //   {useNativeDriver: false}
+  //   ),
+  //   onPanResponderRelease: (event, gestureState) => {
+  //     Animated.spring(speedDialPosition, {
+  //       toValue: {x: 0, y: 0},
+  //       useNativeDriver: true,
+  //     }).start();
+  //   },
+  // })
 
   return(
     <SafeAreaView style={styles.container}>
@@ -64,6 +65,9 @@ function HomeScreen({navigation}) {
 
       {/* Recently Used Section - Includes route to Mobile Dev notes */}
       <Text style={styles.homeText}>Recently Used</Text>
+
+      {/* Maybe try to do a custom made Pressable by adding a property when clicked it's opaqued? Like Touchable Opacity */}
+
 
       <Pressable
       onPress={() => navigation.navigate('Notes')}
@@ -95,13 +99,13 @@ function HomeScreen({navigation}) {
 
         // SpeedDial in the homeScreen will allow you to either add a new note or create a new folder. For the purpose of this project no screens were created for those options, but is something to be developed in the future.
       
-        <Animated.View
-        style={[
+        // <Animated.View
+        // style={[
           
-          {transform: [{ translateX: speedDialPosition.x}, {translateY: speedDialPosition.y}]},
-        ]}
-        {...panResponder.panHandlers}
-        >
+        //   {transform: [{ translateX: speedDialPosition.x}, {translateY: speedDialPosition.y}]},
+        // ]}
+        // {...panResponder.panHandlers}
+        // >
       <SpeedDial
       isOpen={open}
       icon={{name:'add', color: 'black', overlayColor: '#dda0dd', size: 30}}
@@ -140,7 +144,7 @@ function HomeScreen({navigation}) {
         />
 
       </SpeedDial>
-      </Animated.View>
+      // </Animated.View>
       )}
       
 
@@ -364,7 +368,7 @@ function MarketScreen({navigation}) {
     <ScrollView>
 
     <PricingCard
-    color='black'
+    color='#b785d6'
     title= 'Class Notes Package'
     price= '$2'
     info={['Includes 5 Class Notes templates']}
@@ -372,7 +376,7 @@ function MarketScreen({navigation}) {
     />
 
     <PricingCard
-    color='black'
+    color='#b785d6'
     title= 'Project Proposal Package'
     price= '$2'
     info={['Includes 5 Project Proposal templates']}
@@ -380,7 +384,7 @@ function MarketScreen({navigation}) {
     />
 
     <PricingCard
-    color='black'
+    color='#b785d6'
     title= 'Social Media Package'
     price= '$2'
     info={['Includes 5 Social Media planning templates']}
@@ -397,7 +401,7 @@ function MarketScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f4f2f5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -417,8 +421,6 @@ const styles = StyleSheet.create({
   recentPressable: {
     borderRadius: 8,
     borderWidth: 1,
-    width: 190,
-    height: 200,
     padding: 20,
     marginTop: 10,
     marginBottom: 20,
@@ -426,7 +428,7 @@ const styles = StyleSheet.create({
   },
   recentText: {
     fontSize: 40,
-    textAlign: 'center',
+    textAlign: 'left',
     color: 'white',
     fontWeight: 'bold',
     marginTop: 30,
